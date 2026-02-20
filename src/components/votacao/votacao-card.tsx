@@ -34,7 +34,7 @@ export const VotacaoCard = ({ votacao, className }: VotacaoCardProps) => {
   const hasProposicao = !!votacao.proposicao;
 
   return (
-    <Card className={cn("hover:bg-muted/30 transition-colors", className)}>
+    <Card className={cn("bg-card border-border hover:bg-card/80 transition-colors", className)}>
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -47,7 +47,7 @@ export const VotacaoCard = ({ votacao, className }: VotacaoCardProps) => {
             </Badge>
           )}
         </div>
-        <CardTitle className="text-base md:text-lg font-semibold leading-snug mt-2 line-clamp-2" title={votacao.descricao}>
+        <CardTitle className="text-base md:text-lg font-semibold leading-snug mt-2 line-clamp-2 text-foreground" title={votacao.descricao}>
           {votacao.descricao}
         </CardTitle>
       </CardHeader>

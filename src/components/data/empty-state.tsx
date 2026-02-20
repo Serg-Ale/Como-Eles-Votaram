@@ -15,7 +15,7 @@ export const EmptyState = ({
   icon: Icon = Inbox
 }: EmptyStateProps) => {
   return (
-    <div className={cn("flex flex-col items-center justify-center py-12 px-4 text-center border-2 border-dashed rounded-lg bg-muted/20", className)}>
+    <div className={cn("flex flex-col items-center justify-center py-12 px-4 text-center border-2 border-border rounded-lg bg-card", className)}>
       <div className="bg-muted p-4 rounded-full mb-4">
         <Icon className="h-8 w-8 text-muted-foreground" />
       </div>

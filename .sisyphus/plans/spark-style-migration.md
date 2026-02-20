@@ -1124,7 +1124,7 @@ Max Concurrent: 5 (Wave 1 & Wave 2)
   - Message: `style(pages): redesign home page and data components`
   - Files: `src/app/page.tsx`, `src/app/__tests__/page.test.tsx` (if modified)
 
-- [ ] 12. Stat Card & Empty State Token Update (stat-card.tsx + empty-state.tsx)
+- [x] 12. Stat Card & Empty State Token Update (stat-card.tsx + empty-state.tsx)
 
   **What to do**:
   - Open `src/components/data/stat-card.tsx`
@@ -1190,7 +1190,7 @@ Max Concurrent: 5 (Wave 1 & Wave 2)
   - Message: `style(pages): redesign home page and data components`
   - Files: `src/components/data/stat-card.tsx`, `src/components/data/empty-state.tsx`
 
-- [ ] 13. Parlamentar Cards Hover Update (parlamentar-card.tsx + parlamentar-header.tsx + test)
+- [x] 13. Parlamentar Cards Hover Update (parlamentar-card.tsx + parlamentar-header.tsx + test)
 
   **What to do**:
   - Open `src/components/parlamentar/parlamentar-card.tsx`
@@ -1265,7 +1265,7 @@ Max Concurrent: 5 (Wave 1 & Wave 2)
   - Message: `style(pages): redesign home page and data components`
   - Files: `src/components/parlamentar/parlamentar-card.tsx`, `src/components/parlamentar/parlamentar-header.tsx`
 
-- [ ] 14. Votação Cards Hover Update (votacao-card.tsx + voting-history-card.tsx)
+- [x] 14. Votação Cards Hover Update (votacao-card.tsx + voting-history-card.tsx)
 
   **What to do**:
   - Open `src/components/votacao/votacao-card.tsx`

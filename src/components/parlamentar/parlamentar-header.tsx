@@ -22,7 +22,7 @@ export const ParlamentarHeader = ({ parlamentar }: ParlamentarHeaderProps) => {
   const { nome, nomeCompleto, partido, uf, foto, email, legislatura, camara } = parlamentar;
 
   return (
-    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 p-6 md:p-8 bg-card border rounded-xl shadow-sm">
+    <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 p-6 md:p-8 bg-card border border-border rounded-xl shadow-sm">
       <div className="relative shrink-0">
         <FotoParlamentar 
           url={foto} 
@@ -45,7 +45,7 @@ export const ParlamentarHeader = ({ parlamentar }: ParlamentarHeaderProps) => {
 
         <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
           <PartidoBadge partido={partido} className="text-sm px-3 py-1" />
-          <span className="text-sm font-medium border px-2 py-0.5 rounded bg-muted/30">
+          <span className="text-sm font-medium border border-border px-2 py-0.5 rounded text-muted-foreground">
             {uf}
           </span>
           <Separator orientation="vertical" className="h-4 hidden md:block" />

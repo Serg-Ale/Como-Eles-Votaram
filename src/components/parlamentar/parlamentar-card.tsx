@@ -32,7 +32,7 @@ export const ParlamentarCard = ({
 
   return (
     <Link href={href} className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-lg">
-      <Card className={cn("overflow-hidden h-full hover:bg-muted/50 transition-colors border-muted", className)}>
+      <Card className={cn("overflow-hidden h-full bg-card hover:bg-card/80 transition-colors", className)}>
         <CardContent className="p-4 flex flex-col items-center gap-3 text-center">
           <div className="relative">
             <FotoParlamentar 
@@ -48,13 +48,13 @@ export const ParlamentarCard = ({
           </div>
           
           <div className="space-y-1 w-full">
-            <h3 className="font-semibold leading-tight truncate px-1" title={nome}>
+            <h3 className="font-semibold leading-tight truncate px-1 text-foreground" title={nome}>
               {nome}
             </h3>
             
             <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
               <PartidoBadge partido={partido} />
-              <span className="text-xs font-medium border px-1.5 py-0.5 rounded bg-muted/30">
+              <span className="text-xs font-medium border border-border px-1.5 py-0.5 rounded text-muted-foreground">
                 {uf}
               </span>
             </div>
