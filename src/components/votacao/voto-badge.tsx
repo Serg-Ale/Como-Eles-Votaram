@@ -12,11 +12,11 @@ export const VotoBadge = ({ voto, className }: VotoBadgeProps) => {
   const getBadgeStyles = (votoType: string) => {
     switch (votoType) {
       case "Sim":
-        return "bg-blue-500 hover:bg-blue-600 border-blue-600 text-white";
+        return "bg-green-500 hover:bg-green-600 border-green-600 text-white";
       case "Não":
-        return "bg-amber-500 hover:bg-amber-600 border-amber-600 text-white";
+        return "bg-red-500 hover:bg-red-600 border-red-600 text-white";
       case "Abstenção":
-        return "bg-gray-500 hover:bg-gray-600 border-gray-600 text-white";
+        return "bg-amber-500 hover:bg-amber-600 border-amber-600 text-white";
       case "Obstrução":
         return "bg-purple-500 hover:bg-purple-600 border-purple-600 text-white";
       case "Art. 17":

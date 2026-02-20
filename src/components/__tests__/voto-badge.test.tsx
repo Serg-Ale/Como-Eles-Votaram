@@ -10,12 +10,18 @@ describe("VotoBadge", () => {
   it("applies correct styling for 'Sim'", () => {
     render(<VotoBadge voto="Sim" data-testid="badge" />);
     const badge = screen.getByText("Sim");
-    expect(badge).toHaveClass("bg-blue-500");
+    expect(badge).toHaveClass("bg-green-500");
   });
 
   it("applies correct styling for 'Não'", () => {
     render(<VotoBadge voto="Não" />);
     const badge = screen.getByText("Não");
+    expect(badge).toHaveClass("bg-red-500");
+  });
+
+  it("applies correct styling for 'Abstenção'", () => {
+    render(<VotoBadge voto="Abstenção" />);
+    const badge = screen.getByText("Abstenção");
     expect(badge).toHaveClass("bg-amber-500");
   });
 
