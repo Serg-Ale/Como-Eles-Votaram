@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    output   = "../generated/prisma"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Parlamentar {
+    id           String   @id // "dep-{id}" or "sen-{id}"
+    idOriginal   Int      // raw API ID
+    camara       String   // "camara" or "senado"
+    nome         String
+    nomeCompleto String
+    partido      String   // current party
+    uf           String   // state abbreviation
+    foto         String   // HTTPS URL
+    slug         String
+    email        String?
+    legislatura  Int      @default(57)
+
+    votos       VoteRecord[]
+    proposicoes Proposicao[]
+
+    syncedAt  DateTime @default(now())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([camara])
+    @@index([partido])
+    @@index([uf])
+    @@index([slug])
+    @@index([nome])
+}
+
+model VoteEvent {
+    id          String   @id @default(cuid())
+    externalId  String   @unique // composite string from API (e.g., "2600277-9")
+    data        DateTime
+    descricao   String
+    resultado   String?
+    camara      String   // "camara" or "senado"
+
+    proposicaoId String?
+    proposicao   Proposicao? @relation(fields: [proposicaoId], references: [id])
+
+    votos VoteRecord[]
+
+    syncedAt  DateTime @default(now())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([camara])
+    @@index([data])
+    @@index([externalId])
+}
+
+model VoteRecord {
+    id   String @id @default(cuid())
+    voto String // "Sim", "Não", "Abstenção", "Obstrução", "Art. 17", "Não Votou"
+
+    parlamentarId String
+    parlamentar   Parlamentar @relation(fields: [parlamentarId], references: [id])
+
+    votacaoId String
+    votacao   VoteEvent @relation(fields: [votacaoId], references: [id])
+
+    data DateTime
+
+    createdAt DateTime @default(now())
+
+    @@unique([parlamentarId, votacaoId])
+    @@index([parlamentarId])
+    @@index([votacaoId])
+    @@index([voto])
+}
+
+model Proposicao {
+    id               String   @id @default(cuid())
+    externalId       Int      @unique
+    tipo             String   // PL, PEC, PLP, etc.
+    numero           Int
+    ano              Int
+    ementa           String
+    dataApresentacao DateTime
+    urlInteiro       String?
+    camara           String   // "camara" or "senado"
+
+    autorId String?
+    autor   Parlamentar? @relation(fields: [autorId], references: [id])
+
+    votacoes VoteEvent[]
+
+    syncedAt  DateTime @default(now())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@index([tipo])
+    @@index([camara])
+    @@index([autorId])
+}
+
+model SyncLog {
+    id          String    @id @default(cuid())
+    source      String    // "camara" or "senado"
+    entity      String    // "parlamentares", "votacoes", "proposicoes"
+    status      String    // "started", "completed", "failed"
+    itemCount   Int?
+    error       String?
+    startedAt   DateTime  @default(now())
+    completedAt DateTime?
+    duration    Int?      // milliseconds
+
+    @@index([source])
+    @@index([entity])
+    @@index([status])
+}
