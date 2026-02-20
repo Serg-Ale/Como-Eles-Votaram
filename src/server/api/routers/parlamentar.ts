@@ -66,6 +66,16 @@ export const parlamentarRouter = createTRPCRouter({
 
       const items = await ctx.db.parlamentar.findMany({
         where: filters.length > 0 ? { AND: filters } : {},
+        select: {
+          id: true,
+          nome: true,
+          nomeCompleto: true,
+          partido: true,
+          uf: true,
+          foto: true,
+          slug: true,
+          camara: true,
+        },
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,
         orderBy: { nome: "asc" },
@@ -127,6 +137,15 @@ export const parlamentarRouter = createTRPCRouter({
 
       const items = await ctx.db.proposicao.findMany({
         where: { autorId: parlamentarId },
+        select: {
+          id: true,
+          tipo: true,
+          numero: true,
+          ano: true,
+          ementa: true,
+          dataApresentacao: true,
+          urlInteiro: true,
+        },
         orderBy: { createdAt: "desc" },
         take: limit + 1,
         cursor: cursor ? { id: cursor } : undefined,

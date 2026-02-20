@@ -123,6 +123,16 @@ describe("parlamentarRouter", () => {
             },
           ],
         },
+        select: {
+          id: true,
+          nome: true,
+          nomeCompleto: true,
+          partido: true,
+          uf: true,
+          foto: true,
+          slug: true,
+          camara: true,
+        },
         take: 21,
         cursor: undefined,
         orderBy: { nome: "asc" },
@@ -303,6 +313,15 @@ describe("parlamentarRouter", () => {
       expect(result.nextCursor).toBeNull();
       expect(mockDb.proposicao.findMany).toHaveBeenCalledWith({
         where: { autorId: "dep-1" },
+        select: {
+          id: true,
+          tipo: true,
+          numero: true,
+          ano: true,
+          ementa: true,
+          dataApresentacao: true,
+          urlInteiro: true,
+        },
         orderBy: { createdAt: "desc" },
         take: 21,
         cursor: undefined,
