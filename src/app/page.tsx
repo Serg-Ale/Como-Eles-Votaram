@@ -2,12 +2,18 @@ import Link from "next/link";
 
 import { api, HydrateClient } from "@/trpc/server";
 import { HeroSearchBar } from "@/components/search/hero-search-bar";
+import { generateWebSiteLD } from "@/lib/json-ld";
 
 export default async function Home() {
   const stats = await api.stats.getCounts();
+  const websiteSchema = generateWebSiteLD();
 
   return (
     <HydrateClient>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
       <div className="flex flex-col min-h-screen">
         <section className="relative flex flex-col items-center justify-center py-24 md:py-32 bg-gradient-to-b from-[#09090b] to-[#1a1b2e] text-center px-4 overflow-hidden">
           <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />

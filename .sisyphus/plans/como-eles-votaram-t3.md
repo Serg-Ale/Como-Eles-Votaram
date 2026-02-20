@@ -2520,7 +2520,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/app/votacoes/[id]/page.tsx`, `src/app/votacoes/[id]/layout.tsx`
   - Pre-commit: `pnpm build && pnpm test`
 
-- [ ] 17. SEO + Metadata + Sitemap
+- [x] 17. SEO + Metadata + Sitemap
 
   **What to do**:
   - Enhance root `src/app/layout.tsx` metadata export:

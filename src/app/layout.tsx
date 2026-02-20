@@ -9,11 +9,31 @@ import { Footer } from "@/components/layout/footer";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Como Eles Votaram",
-    default: "Como Eles Votaram",
+    template: "%s — Como Eles Votaram",
+    default: "Como Eles Votaram — Transparência Legislativa",
   },
-  description: "Monitore os votos de deputados e senadores brasileiros.",
+  description:
+    "Acompanhe como cada deputado e senador votou no Congresso Nacional. Dados oficiais da Câmara e do Senado.",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  openGraph: {
+    title: "Como Eles Votaram — Transparência Legislativa",
+    description:
+      "Acompanhe como cada deputado e senador votou no Congresso Nacional. Dados oficiais da Câmara e do Senado.",
+    siteName: "Como Eles Votaram",
+    locale: "pt_BR",
+    type: "website",
+    images: ["/opengraph-image.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Como Eles Votaram — Transparência Legislativa",
+    description:
+      "Acompanhe como cada deputado e senador votou no Congresso Nacional.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 const inter = Inter({

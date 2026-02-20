@@ -9,8 +9,6 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   
-  // Create a caller for metadata generation
-  // Note: Request deduplication depends on tRPC/Prisma caching or React cache
   try {
     const votacao = await api.votacao.getById({ id });
 
@@ -25,8 +23,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       : votacao.descricao;
 
     return {
-      title: `Votação: ${description} — Como Eles Votaram`,
+      title: `Votação: ${description}`,
       description: `Veja como cada parlamentar votou em: ${votacao.descricao}. Resultado: ${votacao.resultado}.`,
+      openGraph: {
+        title: `Votação: ${description} — Como Eles Votaram`,
+        description: `Veja como cada parlamentar votou. Resultado: ${votacao.resultado}.`,
+        images: ["/opengraph-image.png"],
+        type: "website",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `Votação: ${description}`,
+        description: `Resultado: ${votacao.resultado}`,
+      },
     };
   } catch (error) {
     return {

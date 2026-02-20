@@ -80,7 +80,7 @@ describe("Slug utilities", () => {
       const url = buildProfileUrl({
         id: "dep-123",
         nome: "João Silva",
-        camara: true,
+        camara: "camara",
       });
       expect(url).toBe("/deputados/dep-123-joao-silva");
     });
@@ -89,7 +89,7 @@ describe("Slug utilities", () => {
       const url = buildProfileUrl({
         id: "sen-456",
         nome: "Maria Santos",
-        camara: false,
+        camara: "senado",
       });
       expect(url).toBe("/senadores/sen-456-maria-santos");
     });
@@ -98,7 +98,7 @@ describe("Slug utilities", () => {
       const url = buildProfileUrl({
         id: "dep-789",
         nome: "José María Gonçalves",
-        camara: true,
+        camara: "camara",
       });
       expect(url).toBe("/deputados/dep-789-jose-maria-goncalves");
     });
@@ -107,7 +107,7 @@ describe("Slug utilities", () => {
       const url = buildProfileUrl({
         id: "sen-111",
         nome: "Maria da Silva Oliveira",
-        camara: false,
+        camara: "senado",
       });
       expect(url).toBe("/senadores/sen-111-maria-da-silva-oliveira");
     });
@@ -116,12 +116,12 @@ describe("Slug utilities", () => {
       const camaraUrl = buildProfileUrl({
         id: "test-1",
         nome: "Test Name",
-        camara: true,
+        camara: "camara",
       });
       const senadoUrl = buildProfileUrl({
         id: "test-1",
         nome: "Test Name",
-        camara: false,
+        camara: "senado",
       });
 
       expect(camaraUrl).toContain("/deputados/");

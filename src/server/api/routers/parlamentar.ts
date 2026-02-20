@@ -164,4 +164,16 @@ export const parlamentarRouter = createTRPCRouter({
 
     return result.map((p) => p.uf);
   }),
+
+  listForSitemap: publicProcedure.query(async ({ ctx }) => {
+    return ctx.db.parlamentar.findMany({
+      select: {
+        id: true,
+        nome: true,
+        camara: true,
+        updatedAt: true,
+      },
+      orderBy: { nome: "asc" },
+    });
+  }),
 });
