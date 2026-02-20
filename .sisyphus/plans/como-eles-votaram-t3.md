@@ -687,7 +687,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `prisma/schema.prisma`, `docker-compose.yml`, `src/server/db.ts`, `.env.example`
   - Pre-commit: `pnpm prisma generate && pnpm build`
 
-- [ ] 4. Zod Schemas for API Response Validation
+- [x] 4. Zod Schemas for API Response Validation
 
   **What to do**:
   - Create Zod schemas that validate RAW government API responses AND derive unified TypeScript types from Prisma-aligned schemas:

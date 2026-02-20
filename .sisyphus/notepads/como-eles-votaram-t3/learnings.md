@@ -146,3 +146,147 @@ Convention discoveries, patterns that work, reusable insights.
 - Plan for seed data strategy when sync service is integrated
 - Use Prisma introspection for documentation generation
 
+
+---
+## [2026-02-20] Task 4: Zod Schema Creation & Validation
+
+### Schema Architecture
+
+#### Prisma-Aligned Schemas (Domain Models)
+- **parlamentar.schema.ts**: Validates Parlamentar entities from DB
+  - ID format validation: "dep-{id}" or "sen-{id}" stored as strings
+  - URL validation for foto field (z.string().url())
+  - Optional nullable email field
+  - Default legislatura: 57
+  
+- **votacao.schema.ts**: Validates VoteEvent and VoteRecord entities
+  - VoteTypeEnum: Strict enum for vote types ("Sim", "Não", "Abstenção", "Obstrução", "Art. 17", "Não Votou")
+  - VoteEventSchema: Models voting sessions with externalId for API composite IDs
+  - VoteRecordSchema: Individual vote records with CUID primary keys
+  - All datetime fields use z.coerce.date() for string→date conversion
+  
+- **proposicao.schema.ts**: Validates Proposicao (Bills/Propositions)
+  - tipo field accepts any string (PL, PEC, PLP, PDL, etc.)
+  - URL validation for urlInteiro field
+  - Optional nullable autorId field for author relationships
+
+#### Raw API Schemas (External Data)
+- **camara-raw.schema.ts**: 6 schemas for Câmara API responses
+  1. CamaraWrapperSchema: Generic response wrapper with dados array + links
+  2. CamaraDeputadoRawSchema: Minimal deputy info (list endpoint)
+  3. CamaraDeputadoDetailRawSchema: Extended deputy with ultimoStatus nested object
+  4. CamaraVotacaoRawSchema: Voting session with placar (scores) fields
+  5. CamaraVotoRawSchema: Individual vote with nested deputado_ object
+  6. CamaraProposicaoRawSchema: Bill details with statusProposicao nested structure
+
+- **senado-raw.schema.ts**: 4 schemas for Senado API responses
+  - Deeply nested PascalCase naming (e.g., CodigoParlamentar, IdentificacaoParlamentar)
+  - SenadoSenadorListRawSchema: Wrapper with ListaParlamentarEmExercicio structure
+  - SenadoVotacaoRawSchema: Session voting with optional Materia (subject)
+  - SenadoVotoRawSchema: Simple vote with CodigoParlamentar identifier
+
+### API Response Structure Differences
+
+**Câmara API**:
+- snake_case field names (id, nome, siglaPartido)
+- Response wrapper: `{ dados: [...], links: [...] }`
+- Nested objects use underscore suffix: deputado_
+
+**Senado API**:
+- PascalCase field names (CodigoParlamentar, NomeParlamentar)
+- XML-to-JSON conversion results in deeply nested structures
+- List responses wrapped in ListaParlamentarEmExercicio > Parlamentares > Parlamentar[]
+
+### Type Derivation Pattern
+
+All schemas use schema-first approach:
+```typescript
+export const MySchema = z.object({ /* ... */ });
+export type MyType = z.infer<typeof MySchema>;
+```
+
+Benefits:
+- Single source of truth (schema is the authority)
+- Types stay synchronized with validation logic
+- No manual type duplication
+
+### Test Coverage
+
+Total: 61 tests (40+ new schema tests + existing 21 tests)
+
+**Per Schema**:
+- parlamentar: 7 tests (valid, invalid, URL validation, enum validation, defaults, nullable)
+- votacao: 10 tests (VoteTypeEnum 2, VoteEventSchema 5, VoteRecordSchema 3)
+- proposicao: 7 tests (valid, optional fields, invalid URL, nullable fields, date coercion, type variations)
+- camara-raw: 21 tests across 6 schemas
+  - CamaraWrapper: 3 tests
+  - CamaraDeputado: 3 tests
+  - CamaraDeputadoDetail: 2 tests
+  - CamaraVotacao: 3 tests
+  - CamaraVoto: 2 tests
+  - CamaraProposicao: 5 tests
+- senado-raw: 16 tests across 4 schemas
+  - SenadoSenador: 4 tests
+  - SenadoSenadorList: 2 tests
+  - SenadoVotacao: 3 tests
+  - SenadoVoto: 4 tests
+
+**Test Patterns Used**:
+1. Happy path: Valid data parses without error
+2. Validation: Invalid data throws ZodError
+3. Edge cases: Nullable fields, optional fields, enum validation, type coercion, nested structures
+4. Type-specific: URL validation, int validation, array length, optional properties
+
+### Verification Results
+
+✓ All 61 tests pass (including 40+ new schema tests)
+✓ TypeScript: `pnpm typecheck` passes with zero errors
+✓ Build: `pnpm build` succeeds (3 static pages, dynamic routes compiled)
+✓ LSP: No errors in any schema files
+✓ Exports: All schemas accessible via barrel import (`src/lib/schemas/index.ts`)
+
+### Key Decisions
+
+1. **URL Validation**: Used z.string().url() for foto/urlFoto/urlInteiro fields
+   - Automatically validates HTTPS URLs
+   - Rejects invalid URLs at parse time
+
+2. **Date Coercion**: Used z.coerce.date() for all date fields
+   - Accepts string ("2024-02-15") or Date objects
+   - Returns Date object after parsing
+   - Better developer experience than strict type checking
+
+3. **Enum for Vote Types**: Created VoteTypeEnum for centralized validation
+   - Prevents typos in vote type strings
+   - Type exported as VoteType for TS support
+   - Single source of truth for valid vote values
+
+4. **Optional vs Nullable**: 
+   - `.optional()` - field can be missing from object
+   - `.nullable()` - field can be present but null
+   - Both used together: `.optional().nullable()`
+
+5. **Nested Object Handling**: 
+   - ultimoStatus, statusProposicao, Materia all wrapped in z.object()
+   - Optional nested objects use `.optional()` on parent
+   - Preserves API response structure for easier transformation
+
+### Integration Points for Tasks 5-6
+
+- **Task 5 (Transformation)**: Raw API schemas need transformers to map Câmara/Senado responses to domain models
+- **Task 6 (Sync Service)**: Use domain schemas to validate data before database insertion
+- **Data Flow**:
+  1. Fetch from API → validate with raw schema
+  2. Transform via adapter → map fields, transform data types
+  3. Validate with domain schema → ensure DB constraints met
+  4. Insert via Prisma → type-safe database write
+
+### Recommendations for Wave 2
+
+1. Add runtime validation middleware to API routes using these schemas
+2. Create adapter/transformer functions that map raw schemas to domain schemas
+3. Consider adding `.describe()` to important fields for OpenAPI documentation
+4. Add custom error messages via `.refine()` for business logic validation
+5. Create integration tests that validate actual API responses against schemas
+6. Consider zod-to-openapi for auto-generating API documentation
+
