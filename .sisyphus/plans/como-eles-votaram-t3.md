@@ -1196,7 +1196,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/server/sync/orchestrator.ts`, `src/app/api/sync/route.ts`, `src/server/sync/index.ts`
   - Pre-commit: `pnpm build && pnpm test`
 
-- [ ] 8. tRPC Router + Procedures
+- [x] 8. tRPC Router + Procedures
 
   **What to do**:
   - Create the tRPC router layer that reads from the Prisma database. This replaces the old plan's Next.js API Route Handlers. ALL data served to the frontend goes through tRPC — type-safe from database to React component.
@@ -1361,7 +1361,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/server/api/trpc.ts`, `src/server/api/root.ts`, `src/server/api/routers/*.ts`, `src/trpc/`, `src/app/api/trpc/[trpc]/route.ts`
   - Pre-commit: `pnpm build && pnpm test`
 
-- [ ] 9. Reusable UI Components Library
+- [x] 9. Reusable UI Components Library
 
   **What to do**:
   - Build the shared component library that ALL pages will use. Every component uses the design tokens from Task 2, shadcn/ui primitives, and follows the dark analytics dashboard aesthetic.

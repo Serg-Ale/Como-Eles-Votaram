@@ -705,3 +705,29 @@ This is pure boilerplate — orchestrator can implement directly when task is at
 
 **Next Task**: Task 8.3 (Stats Router) — 1 procedure (getCounts)
 
+
+---
+## [2026-02-20] Task 9: Shared Component Library
+
+### Component Library Implementation
+
+- Created component structure:
+  - `src/components/ui/`: shadcn primitives (button, card, etc.)
+  - `src/components/parlamentar/`: Domain components (card, header, photo)
+  - `src/components/votacao/`: Voting components (badge, card, list)
+  - `src/components/layout/`: Layout components (header, footer)
+  - `src/components/data/`: Data display (table, stats)
+
+- Implemented strict neutrality in design:
+  - `VotoBadge` uses blue/amber/gray palette (no judgment colors like green/red)
+  - `EmptyState` uses "Sem dados disponíveis" instead of "Sem atividade"
+
+- Technical patterns established:
+  - Named exports used exclusively for all components
+  - `next/image` wrapper with error handling for avatars
+  - `Intl.RelativeTimeFormat` for localization
+  - Generic `DataTable` with client-side sorting
+
+- Testing strategy:
+  - Mocked `next/image` to handle `priority` prop correctly in Jest
+  - Verified component rendering and logic with `@testing-library/react`
