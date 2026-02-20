@@ -70,3 +70,31 @@
 - Evidence: 7 new files in `.sisyphus/evidence/` (task-19-*)
 - Tests: 269/269 passing (no regressions)
 - Build: Zero TypeScript errors
+
+## Code Quality Standards (Task F2)
+
+**Code Quality Assessment:**
+- TypeScript: 0 errors (strict mode, 99 non-test files)
+- ESLint: 0 warnings/errors (--max-warnings 0 enforced)
+- Tests: 269/269 passing (100% pass rate, 38 suites)
+- Zero AI slop: No over-commenting, no generic names, proper abstractions
+- Zero type safety violations: No `as any`, no `@ts-ignore`
+- Zero code smells: No empty catch blocks, no TODO/FIXME markers
+
+**Console Usage (10 occurrences, all justified):**
+- tRPC timing middleware: Performance logging (line 94 in trpc.ts)
+- Senado sync errors: External API failures logged to database + console
+- Next.js error boundaries: Standard pattern (console.error in error.tsx files)
+- All console usage is intentional and documented
+
+**Safe Patterns:**
+- dangerouslySetInnerHTML: 3 occurrences (JSON-LD schema injection via JSON.stringify, safe)
+- Zod-first validation: All transforms use schema.parse() for runtime safety
+- Named exports: Consistent pattern across all files (except Next.js pages)
+
+**Minor INFO items (non-blocking):**
+- tRPC timing middleware logs in production (could be dev-only)
+- Redundant console.warn in sync layer (already logged to database)
+
+**Verdict:** PASS - Production-ready code quality
+
