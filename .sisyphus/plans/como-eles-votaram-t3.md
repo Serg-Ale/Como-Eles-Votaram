@@ -1073,7 +1073,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/server/sync/senado/*.ts`, `src/__tests__/sync/senado/`
   - Pre-commit: `pnpm tsc --noEmit && pnpm test`
 
-- [ ] 7. Sync Orchestrator + API Route
+- [x] 7. Sync Orchestrator + API Route
 
   **What to do**:
   - Create `src/server/sync/orchestrator.ts` — the main sync orchestration module:

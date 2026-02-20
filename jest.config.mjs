@@ -23,6 +23,9 @@ const config = {
     "!src/**/*.d.ts",
     "!src/**/index.{js,jsx,ts,tsx}",
   ],
+  transformIgnorePatterns: [
+    "node_modules/(?!(superjson)/)",
+  ],
 };
 
 export default createJestConfig(config);
