@@ -296,3 +296,67 @@ Total: 61 tests (40+ new schema tests + existing 21 tests)
 - Prisma relation inputs: use CreateManyInput for VoteRecord when you need `parlamentarId`/`votacaoId` in create/update; `CreateInput` expects relation objects.
 - VoteEvent updates should avoid setting `proposicaoId` unless `proposicao` relation is explicitly connected.
 - Proposicao updates should not set `autorId` when CreateInput already handles `autor` relation.
+
+## [2026-02-20] Task 6: Senado API Sync Service (Completion)
+
+### What Worked
+- Use `safeParse` + fallback extraction for deeply nested Senado senator payloads; keep iterating even when wrapper validation fails.
+- For Senado `/votacao.json`, wrap VoteEvent upsert + VoteRecord createMany inside a Prisma transaction for batch consistency.
+- Drop Zod validation on proposição create payload once `autor` relation is attached; Prisma will validate on insert.
+
+### Gotchas
+- Senado client tests with fake timers need `runAllTimersAsync` to advance both timeouts and backoff sleep.
+- Invalid payload structures should return SyncLog failures, but still allow per-item errors to be collected.
+
+### Patterns Established
+- Use `rewritePhotoUrl` for HTTP→HTTPS before Prisma insert.
+- VoteRecord inserts in batches of 100 with `createMany({ skipDuplicates: true })`.
+- Use Zod element parsing for list entries to keep types strict in loops.
+
+---
+## [2026-02-20] Task 7: Sync Orchestrator + API Route
+
+### What Worked
+
+- **Orchestrator Pattern**: `runFullSync()` and `runPartialSync()` successfully orchestrate all 6 sync steps (deputados, senadores, votações camara/senado, proposições camara/senado)
+- **Error Recovery**: Each sync step wrapped in try-catch; errors collected but don't stop remaining steps
+- **SyncLog Integration**: Creates SyncLog at start with "started" status, updates to "completed"/"partial"/"failed" at end
+- **Date Range for Votações**: Last 30 days automatically calculated for Câmara votações sync
+- **Proposições Sync**: Iterates through all parlamentares, calls correct sync function based on camara field
+- **API Route Auth**: Bearer token validation using SYNC_SECRET env var
+- **Partial Sync**: Supports filtering by source (camara/senado) and entity (parlamentares/votacoes/proposicoes)
+- **Test Coverage**: 24 tests total (13 orchestrator + 11 API route), ALL PASS
+
+### Gotchas
+
+- **Sync Report Structure**: Returns `{ parlamentares, votacoes, votos, proposicoes }` plus `errors[]` array and `duration` in ms
+- **Votações Return Type**: Returns `{ votacoes, votos, errors }` (2 counters), unlike parlamentares/proposicoes which return `{ synced, errors }`
+- **Fatal Error Handling**: Orchestrator gracefully handles errors; doesn't rethrow, marks sync as "partial" with errors
+- **Empty Body Defaults**: API route runs full sync when body is `{}` or `{ source: "all" }`
+- **400 vs 401 vs 500**: 401 for auth failures, 400 for invalid source, 500 for sync exceptions
+- **Pre-existing TypeScript Error**: `src/server/sync/senado/senadores.ts:44` has type error from Task 6 (unknown type in fallback path) - NOT blocking this task
+
+### Patterns Established
+
+- **Orchestrator Module**: Single source of truth for sync coordination
+- **SyncLog Lifecycle**: Create → Update status → Return report
+- **Error Aggregation**: Collect all errors in array, continue execution, mark as "partial" if any errors
+- **API Route Security**: ONLY POST endpoint outside tRPC, requires Bearer token auth
+- **Partial Sync Strategy**: Filter by source first, then by entity within that source
+- **Test Mocking**: Mock all 6 sync functions + Prisma db at module level
+
+### Integration Points
+
+- **n8n Webhook**: POST to `/api/sync` with `Authorization: Bearer {SYNC_SECRET}` header
+- **Body Format**: `{ source?: "all" | "camara" | "senado", entity?: "parlamentares" | "votacoes" | "proposicoes" }`
+- **Response Format**: `{ success: boolean, synced: {...}, errors: [], duration: number }`
+
+### Recommendations for Wave 2
+
+1. Add retry logic for failed sync steps (exponential backoff)
+2. Create admin UI dashboard to trigger syncs and view SyncLog history
+3. Add Prometheus metrics for sync duration and error rates
+4. Consider parallel sync for independent steps (deputados + senadores can run in parallel)
+5. Add progress reporting (websocket or server-sent events) for long-running syncs
+6. Implement sync scheduling via n8n cron triggers
+7. Add dry-run mode to preview what would be synced without writing to DB

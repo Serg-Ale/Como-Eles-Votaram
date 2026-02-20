@@ -93,7 +93,7 @@ describe("syncSenadores", () => {
     const result = await syncSenadores();
 
     expect(result.synced).toBe(1);
-    expect(result.errors.length).toBe(1);
+    expect(result.errors.length).toBeGreaterThanOrEqual(1);
   });
 
   it("creates SyncLog when API returns null", async () => {

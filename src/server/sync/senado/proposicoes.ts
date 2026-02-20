@@ -54,6 +54,24 @@ export const syncProposicoesSenado = async (senadorId: number) => {
   let synced = 0;
 
   const proposicoes = extractProposicoes(response);
+  const hasExpectedKeys =
+    typeof response === "object" &&
+    response !== null &&
+    ("Materias" in response || "Materia" in response);
+
+  if (!hasExpectedKeys && proposicoes.length === 0) {
+    const message = "Failed to parse proposicoes response";
+    console.warn(message);
+    await db.syncLog.create({
+      data: {
+        source: "senado",
+        entity: "proposicoes",
+        status: "failed",
+        error: message,
+      },
+    });
+    return { synced: 0, errors: [message] };
+  }
 
   for (const raw of proposicoes) {
     try {

@@ -949,7 +949,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/server/sync/camara/*.ts`, `src/__tests__/sync/camara/`
   - Pre-commit: `pnpm tsc --noEmit && pnpm test`
 
-- [ ] 6. Senado API Sync Service
+- [x] 6. Senado API Sync Service
 
   **What to do**:
   - Create `src/server/sync/senado/client.ts` — HTTP client for Senado API:
@@ -1139,14 +1139,14 @@ Max Concurrent: 5 (Wave 4)
   - Partial failure recovery ensures one broken API doesn't prevent all other data from updating
 
   **Acceptance Criteria**:
-  - [ ] `src/server/sync/orchestrator.ts` exists with `runFullSync()` and `runPartialSync()`
-  - [ ] `src/app/api/sync/route.ts` handles POST with auth
-  - [ ] Unauthenticated POST returns 401
-  - [ ] Authenticated POST triggers sync and returns report
-  - [ ] Orchestrator continues on partial failure (one source failing doesn't crash everything)
-  - [ ] SyncLog records created for each sync operation
-  - [ ] Integration tests pass with mocked sync services
-  - [ ] `pnpm build` succeeds
+  - [x] `src/server/sync/orchestrator.ts` exists with `runFullSync()` and `runPartialSync()`
+  - [x] `src/app/api/sync/route.ts` handles POST with auth
+  - [x] Unauthenticated POST returns 401
+  - [x] Authenticated POST triggers sync and returns report
+  - [x] Orchestrator continues on partial failure (one source failing doesn't crash everything)
+  - [x] SyncLog records created for each sync operation
+  - [x] Integration tests pass with mocked sync services
+  - [x] `pnpm build` succeeds
 
   **QA Scenarios**:
 

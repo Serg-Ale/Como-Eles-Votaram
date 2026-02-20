@@ -24,14 +24,28 @@ export const syncSenadores = async () => {
   }
 
   try {
-    const parsed = SenadoSenadorListRawSchema.parse(response);
-    const senadores =
-      parsed.ListaParlamentarEmExercicio.Parlamentares.Parlamentar;
+    const parsed = SenadoSenadorListRawSchema.safeParse(response);
+    const senadores = parsed.success
+      ? parsed.data.ListaParlamentarEmExercicio.Parlamentares.Parlamentar
+      : ((response as { ListaParlamentarEmExercicio?: { Parlamentares?: { Parlamentar?: unknown[] } } })
+          .ListaParlamentarEmExercicio?.Parlamentares?.Parlamentar ?? []);
+
+    if (!Array.isArray(senadores) || senadores.length === 0) {
+      throw new Error("Failed to parse Senado data");
+    }
+
+    if (!parsed.success) {
+      errors.push("Partial Senado payload validation failed");
+    }
     let synced = 0;
 
     for (const raw of senadores) {
       try {
-        const parlamentar = transformSenador(raw);
+        const parlamentar = transformSenador(
+          SenadoSenadorListRawSchema.shape.ListaParlamentarEmExercicio.shape.Parlamentares.shape.Parlamentar.element.parse(
+            raw
+          )
+        );
         await db.parlamentar.upsert({
           where: { id: parlamentar.id },
           create: parlamentar,
