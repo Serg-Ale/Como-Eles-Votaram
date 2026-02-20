@@ -1,40 +1,72 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
 
 export const Header = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 items-center justify-between px-4 md:px-8 max-w-7xl mx-auto">
-        <div className="flex items-center gap-6">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="font-bold text-lg tracking-tight">Como Eles Votaram</span>
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded bg-primary flex items-center justify-center">
+            <span className="font-mono text-primary-foreground font-bold text-xs">CEV</span>
+          </div>
+          <span className="font-bold text-lg tracking-tight text-foreground">
+            Como Eles <span className="text-primary">Votaram</span>
+          </span>
+        </div>
+
+        <nav className="hidden md:flex items-center gap-8">
+          <Link href="/deputados" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Deputados
           </Link>
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
-            <Link href="/deputados" className="transition-colors hover:text-foreground text-muted-foreground">
-              Deputados
-            </Link>
-            <Link href="/senadores" className="transition-colors hover:text-foreground text-muted-foreground">
-              Senadores
-            </Link>
-            <Link href="/votacoes" className="transition-colors hover:text-foreground text-muted-foreground">
-              Votações
-            </Link>
-          </nav>
+          <Link href="/senadores" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Senadores
+          </Link>
+          <Link href="/votacoes" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Votações
+          </Link>
+        </nav>
+
+        <div className="hidden md:flex items-center gap-3">
+          <Link href="/busca">
+            <Button className="px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-md font-mono">
+              Explorar →
+            </Button>
+          </Link>
         </div>
-        
-        <div className="flex items-center gap-2">
-          <p className="hidden md:block text-xs text-muted-foreground mr-2 font-mono">
-            Fiscalize seus representantes
-          </p>
-          <Button variant="ghost" size="icon" asChild className="hover:bg-muted">
-            <Link href="/buscar">
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Buscar</span>
-            </Link>
-          </Button>
-        </div>
+
+        <button
+          type="button"
+          onClick={() => setOpen(!open)}
+          className="md:hidden p-2 text-muted-foreground"
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
+
+      {open && (
+        <div className="md:hidden border-t border-border bg-background px-4 py-4 flex flex-col gap-4">
+          <Link href="/deputados" className="text-sm text-muted-foreground hover:text-foreground">
+            Deputados
+          </Link>
+          <Link href="/senadores" className="text-sm text-muted-foreground hover:text-foreground">
+            Senadores
+          </Link>
+          <Link href="/votacoes" className="text-sm text-muted-foreground hover:text-foreground">
+            Votações
+          </Link>
+          <Link href="/busca">
+            <Button className="w-full px-4 py-2 bg-primary text-primary-foreground text-sm font-semibold rounded-md font-mono">
+              Explorar →
+            </Button>
+          </Link>
+        </div>
+      )}
     </header>
   );
 };

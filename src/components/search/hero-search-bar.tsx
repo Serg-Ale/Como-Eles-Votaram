@@ -24,12 +24,12 @@ export function HeroSearchBar() {
         <Input
           type="search"
           placeholder="Busque por nome, partido ou estado..."
-          className="pl-9 bg-background/50 backdrop-blur-sm border-muted-foreground/20 focus-visible:ring-primary/50"
+          className="pl-9 bg-secondary/50 backdrop-blur-sm border-border focus-visible:ring-primary"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
       </div>
-      <Button type="submit" disabled={!query.trim()}>
+      <Button type="submit" disabled={!query.trim()} className="font-mono">
         Buscar
       </Button>
     </form>
