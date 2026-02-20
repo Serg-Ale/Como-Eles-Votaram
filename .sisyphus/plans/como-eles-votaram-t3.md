@@ -2694,7 +2694,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/app/layout.tsx`, `src/app/sitemap.ts`, `src/app/robots.ts`, `src/app/opengraph-image.*`, `src/lib/json-ld.ts`
   - Pre-commit: `pnpm build`
 
-- [ ] 18. Error States + Loading States + Empty States
+- [x] 18. Error States + Loading States + Empty States
 
   **What to do**:
   - Create Next.js error/loading boundaries for every route segment:
