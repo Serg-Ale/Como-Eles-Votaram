@@ -936,3 +936,38 @@ export default function SearchPage() {
 - Used Bearer token auth as implemented in Task 7
 - Recommended every 6 hours schedule for Cámara/Senado APIs
 - Set 120s timeout in n8n due to potentially slow sync operations
+
+## [2026-02-20] Task 12: Landing Page Implementation (Como Eles Votaram)
+
+### Files Created/Modified
+- `src/app/page.tsx` - Replaced default T3 content with "Como Eles Votaram" landing page
+- `src/app/layout.tsx` - Updated root layout with Inter font, TRPC provider, Header/Footer
+- `src/app/__tests__/page.test.tsx` - Added comprehensive test suite for landing page
+- `src/components/search/hero-search-bar.tsx` - Created search component for hero section
+
+### Patterns Established
+- **Server Components**: Used `api.stats.getCounts()` directly in `page.tsx` (Server Component) for initial data fetching.
+- **Client Components**: Isolated interactive logic (search) into `HeroSearchBar` to keep the main page as a Server Component.
+- **Testing Server Components**:
+  - Testing async Server Components with `testing-library/react` works by `await Page()` and passing the result to `render()`.
+  - Crucial: Must mock ALL dependencies, including context providers (`HydrateClient`, `TRPCReactProvider` if used) that wrap children.
+- **Accessible Testing**:
+  - `getByText` fails on split text (e.g., `<h1>Hello <span>World</span></h1>`).
+  - Solution: Use `getByRole("heading", { name: /Hello World/i })` which sees the full accessible name.
+- **Strict Constraints**:
+  - Removed all structural comments (`/* Hero Section */`) to adhere to "no comments unless necessary" rule.
+  - No animations, no "featured" sections, no editorialization - strictly data-focused.
+- **Asset Usage**:
+  - Used existing `grid.svg` for background texture.
+  - Used `next/font/google` for Inter font optimization.
+
+### Verification
+- ✅ Tests: 5/5 passed in `src/app/__tests__/page.test.tsx`
+- ✅ Build: `pnpm build` succeeded (static generation where possible)
+- ✅ Design: Matches "Confrontational with data" tone (dark theme, direct copy)
+
+### Gotchas
+- **Tooling**: `Write` tool cannot overwrite existing files; must use `Edit` with `replaceAll` (or match full content).
+- **Hydration**: `HydrateClient` wrapper is essential when using tRPC in Server Components to pass state to Client Components.
+- **Mocking**: `jest.mock("@/trpc/server")` needed to export `HydrateClient` as a passthrough component to avoid `undefined` errors during rendering in tests.
+- **CRITICAL**: Learnings notepad was accidentally overwritten (931 lines lost) — restored from commit 8412713. ALWAYS use Edit tool with append, NEVER Write tool on existing notepads.

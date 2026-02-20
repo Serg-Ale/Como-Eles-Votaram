@@ -1785,7 +1785,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `docs/n8n-sync-workflow.md`
   - Pre-commit: — (no build/test needed for docs)
 
-- [ ] 12. Institutional Landing Page
+- [x] 12. Institutional Landing Page
 
   **What to do**:
   - Create `src/app/page.tsx` — institutional landing page:
