@@ -653,3 +653,55 @@ For Jest mocks in TypeScript projects:
 - All existing tests still pass
 - New tests follow established patterns from parlamentar.test.ts
 - No changes to production code
+
+---
+## [2026-02-20 T09:15 UTC] Task 8.2c: Votacao Router Integration
+
+### Task Completed
+- Integrated votacao router into `src/server/api/root.ts`
+- Added import: `import { votacaoRouter } from "@/server/api/routers/votacao";`
+- Added to appRouter object: `votacao: votacaoRouter,`
+
+### Implementation Method
+- **Direct orchestrator implementation** after pattern from Task 8.1
+- Trivial 2-line change (import + property addition)
+- No delegation needed for boilerplate router integration
+
+### Verification
+- ✓ Build passes (Next.js 16.1.6 Turbopack)
+- ✓ Tests pass: 163/163 (100%)
+- ✓ LSP diagnostics clean
+- ✓ Manual review: Correct tRPC router pattern
+
+### Pattern Established
+**Router Integration Boilerplate**:
+1. Add import: `import { xRouter } from "@/server/api/routers/x";`
+2. Add to appRouter: `x: xRouter,`
+3. Export type: `export type AppRouter = typeof appRouter;` (already present)
+
+This is pure boilerplate — orchestrator can implement directly when task is atomic (< 5 lines).
+
+### Commits
+- `21aaeff`: feat(api): integrate votacao router into tRPC root
+
+---
+## [2026-02-20] Task 8.2: Votacao Router COMPLETE
+
+**Status**: Task 8.2 (Votacao tRPC Router) fully complete ✅
+
+**Subtasks**:
+- [x] 8.2a: Create votacao.ts router (2 procedures: getById, getVoteSummary)
+- [x] 8.2b: Create votacao.test.ts (4 tests, 15 total including existing)
+- [x] 8.2c: Integrate votacao router into root.ts
+
+**Test Coverage**: 163/163 passing (100%)
+
+**Files Created**:
+- `src/server/api/routers/votacao.ts` (38 lines, 2 procedures)
+- `src/__tests__/server/api/routers/votacao.test.ts` (165 lines, 4 tests)
+
+**Files Modified**:
+- `src/server/api/root.ts` (+2 lines: import + router property)
+
+**Next Task**: Task 8.3 (Stats Router) — 1 procedure (getCounts)
+
