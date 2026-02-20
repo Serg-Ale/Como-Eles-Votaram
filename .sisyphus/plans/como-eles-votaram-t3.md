@@ -1525,7 +1525,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/components/**/*.tsx`, `src/components/__tests__/`
   - Pre-commit: `pnpm build && pnpm test`
 
-- [ ] 10. Search Service + Utilities
+- [x] 10. Search Service + Utilities
 
   **What to do**:
   - Build the search utilities layer that supports the search page. Unlike the old plan (which searched via API calls), this searches the Prisma database via tRPC procedures created in Task 8.
@@ -1664,7 +1664,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/lib/search/*.ts`, `src/lib/search/__tests__/*.ts`
   - Pre-commit: `pnpm tsc --noEmit && pnpm test`
 
-- [ ] 11. n8n Sync Workflow Documentation
+- [x] 11. n8n Sync Workflow Documentation
 
   **What to do**:
   - Create documentation for setting up the n8n workflow that triggers data synchronization. The sync logic itself is in Task 7 (POST `/api/sync` endpoint). This task documents HOW to configure n8n to call that endpoint.

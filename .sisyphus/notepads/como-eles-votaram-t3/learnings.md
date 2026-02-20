@@ -932,3 +932,7 @@ export default function SearchPage() {
 6. Implement faceted search UI using parseSearchParams
 7. Add search result ranking/sorting utilities
 
+- Documented n8n sync workflow in docs/n8n-sync-workflow.md
+- Used Bearer token auth as implemented in Task 7
+- Recommended every 6 hours schedule for Cámara/Senado APIs
+- Set 120s timeout in n8n due to potentially slow sync operations
