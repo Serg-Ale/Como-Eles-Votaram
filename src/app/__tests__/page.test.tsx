@@ -62,10 +62,10 @@ describe("Home Page", () => {
     const page = await Page();
     render(page);
     
-    // Check if the numbers are present (regex for formatted numbers might be needed if formatted)
-    expect(screen.getByText("513")).toBeInTheDocument(); // Deputados
-    expect(screen.getByText("81")).toBeInTheDocument(); // Senadores
-    expect(screen.getByText("1.500")).toBeInTheDocument(); // Votações
+    // Check if the numbers are present (stats appear twice: hero + dedicated section)
+    expect(screen.getAllByText("513")).toHaveLength(2); // Deputados (hero + stats section)
+    expect(screen.getAllByText("81")).toHaveLength(2); // Senadores (hero + stats section)
+    expect(screen.getAllByText("1.500")).toHaveLength(2); // Votações (hero + stats section)
   });
 
   it("renders source attribution links", async () => {

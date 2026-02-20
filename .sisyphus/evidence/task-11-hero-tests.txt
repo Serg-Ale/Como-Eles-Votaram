@@ -1,0 +1,4 @@
+
+> vote-tracking-app@0.1.0 test
+> jest src/app/__tests__/page.test.tsx
+
