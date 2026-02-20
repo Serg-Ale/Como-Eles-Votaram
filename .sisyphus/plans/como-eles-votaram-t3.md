@@ -817,7 +817,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/lib/schemas/*.ts`, `src/__tests__/schemas/`
   - Pre-commit: `pnpm tsc --noEmit && pnpm test`
 
-- [ ] 5. Câmara API Sync Service
+- [x] 5. Câmara API Sync Service
 
   **What to do**:
   - Create `src/server/sync/camara/client.ts` — HTTP client for Câmara API:

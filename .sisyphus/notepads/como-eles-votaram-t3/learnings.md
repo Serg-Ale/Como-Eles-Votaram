@@ -290,3 +290,9 @@ Total: 61 tests (40+ new schema tests + existing 21 tests)
 5. Create integration tests that validate actual API responses against schemas
 6. Consider zod-to-openapi for auto-generating API documentation
 
+---
+## [2026-02-20 T04:38 UTC] Task 5: Câmara API Sync Service
+
+- Prisma relation inputs: use CreateManyInput for VoteRecord when you need `parlamentarId`/`votacaoId` in create/update; `CreateInput` expects relation objects.
+- VoteEvent updates should avoid setting `proposicaoId` unless `proposicao` relation is explicitly connected.
+- Proposicao updates should not set `autorId` when CreateInput already handles `autor` relation.
