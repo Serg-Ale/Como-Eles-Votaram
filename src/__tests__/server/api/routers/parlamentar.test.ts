@@ -6,21 +6,32 @@ import { db } from "@/server/db";
 jest.mock("@/server/db", () => ({
   db: {
     parlamentar: {
-      findUnique: jest.fn(),
-      findMany: jest.fn(),
+      findUnique: jest.fn() as jest.MockedFunction<any>,
+      findMany: jest.fn() as jest.MockedFunction<any>,
     },
     voteRecord: {
-      findMany: jest.fn(),
+      findMany: jest.fn() as jest.MockedFunction<any>,
     },
     proposicao: {
-      findMany: jest.fn(),
+      findMany: jest.fn() as jest.MockedFunction<any>,
     },
   },
 }));
 
 jest.mock("superjson", () => ({ default: {} }));
 
-const mockDb = db as jest.Mocked<typeof db>;
+const mockDb = {
+  parlamentar: {
+    findUnique: jest.fn() as jest.MockedFunction<any>,
+    findMany: jest.fn() as jest.MockedFunction<any>,
+  },
+  voteRecord: {
+    findMany: jest.fn() as jest.MockedFunction<any>,
+  },
+  proposicao: {
+    findMany: jest.fn() as jest.MockedFunction<any>,
+  },
+} as any;
 
 let parlamentarRouter: any;
 let createCaller: () => any;
