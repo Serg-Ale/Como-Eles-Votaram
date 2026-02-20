@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Space_Grotesk, Space_Mono } from "next/font/google";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Header } from "@/components/layout/header";
@@ -36,9 +36,16 @@ export const metadata: Metadata = {
   },
 };
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+const spaceMono = Space_Mono({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -47,7 +54,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="pt-BR">
-      <body className={`font-sans ${inter.variable} antialiased`}>
+      <body className={`font-sans ${spaceGrotesk.variable} ${spaceMono.variable} antialiased`}>
         <TRPCReactProvider>
           <div className="flex min-h-screen flex-col">
             <Header />

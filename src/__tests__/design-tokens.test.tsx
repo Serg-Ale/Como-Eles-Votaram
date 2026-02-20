@@ -18,9 +18,7 @@ describe('Design Tokens', () => {
   
   it('exports brand colors from colors.ts', async () => {
     const { colors } = await import('@/lib/theme/colors');
-    expect(colors.verde).toBe('#22c55e');
-    expect(colors.amarelo).toBe('#facc15');
-    expect(colors.azul).toBe('#3b82f6');
-    expect(colors.background).toBe('#09090b');
+    expect(colors.primary).toBe('#34d399');
+    expect(colors.background).toBe('#071018');
   });
 });

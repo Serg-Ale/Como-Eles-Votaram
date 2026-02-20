@@ -1,19 +1,9 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* 
-  Brazilian Legislative Transparency Platform Theme
-  - Dark mode ONLY (permanent)
-  - Brazilian flag accents: Verde, Amarelo, Azul
-  - Validated WCAG AA contrast on #09090b (zinc-950)
-*/
+/* Navy Civic Dark Theme — Como Eles Votaram */
 
 @theme {
-  /* Brand colors */
-  --color-verde: hsl(var(--verde));
-  --color-amarelo: hsl(var(--amarelo));
-  --color-azul: hsl(var(--azul));
-
   /* Semantic tokens mapping */
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -49,57 +39,58 @@
   --radius-xl: calc(var(--radius) + 4px);
   
   /* Typography */
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono), ui-monospace, monospace;
 }
+
 
 @layer base {
   :root {
-    /* Brand Colors (HSL values for Tailwind opacity support) */
-    --verde: 142 72% 55%;    /* #22c55e */
-    --amarelo: 48 96% 54%;   /* #facc15 */
-    --azul: 217 73% 60%;     /* #3b82f6 */
+    /* Navy Civic Dark Theme tokens */
+    --background: 220 50% 4%;
+    --foreground: 210 30% 95%;
 
-    /* Base Colors - Dark Mode Permanent */
-    --background: 240 10% 3.9%; /* #09090b (zinc-950) */
-    --foreground: 240 4% 95.9%; /* zinc-100 */
+    --card: 220 45% 7%;
+    --card-foreground: 210 30% 95%;
 
-    /* Card & Surfaces */
-    --card: 240 10% 4.5%;       /* zinc-900 */
-    --card-foreground: 240 4% 95.9%;
+    --popover: 220 45% 7%;
+    --popover-foreground: 210 30% 95%;
 
-    /* Popovers */
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 240 4% 95.9%;
+    --primary: 142 76% 52%;
+    --primary-foreground: 220 50% 4%;
 
-    /* Primary - Using Azul (Blue) */
-    --primary: 217 73% 60%; /* var(--azul) didn't work in :root sometimes, using value directly */
-    --primary-foreground: 0 0% 100%;
+    --secondary: 220 35% 12%;
+    --secondary-foreground: 210 30% 85%;
 
-    /* Secondary - Zinc 800 */
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 240 4% 95.9%;
+    --muted: 220 35% 10%;
+    --muted-foreground: 215 20% 50%;
 
-    /* Muted */
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 3.8% 46%; /* zinc-400 */
+    --accent: 142 76% 52%;
+    --accent-foreground: 220 50% 4%;
 
-    /* Accent - Using Verde (Green) */
-    --accent: 142 72% 55%;
-    --accent-foreground: 0 0% 100%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 210 30% 95%;
 
-    /* Destructive - Red 800 */
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 240 4% 95.9%;
+    --border: 220 30% 14%;
+    --input: 220 35% 10%;
+    --ring: 142 76% 52%;
 
-    /* Borders & Inputs */
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 217 73% 60%;
+    --radius: 0.375rem;
 
-    /* Radius */
-    --radius: 0.5rem;
+    /* Custom tokens */
+    --navy-deep: 220 50% 4%;
+    --navy-card: 220 45% 7%;
+    --navy-surface: 220 35% 10%;
+    --navy-border: 220 30% 14%;
+    --green-acid: 142 76% 52%;
+    --green-dim: 142 60% 35%;
+    --vote-yes: 142 76% 52%;
+    --vote-no: 0 72% 51%;
+    --vote-abstain: 40 80% 55%;
+    --vote-absent: 215 20% 40%;
   }
 }
+
 
 @layer base {
   * {
@@ -109,4 +100,28 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+@layer components {
+  .grid-bg {
+    background-image:
+      linear-gradient(hsl(220 30% 14% / 0.3) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(220 30% 14% / 0.3) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .stat-number {
+    font-family: var(--font-mono);
+    @apply text-4xl font-bold text-primary;
+  }
+
+  .tag-pill {
+    font-family: var(--font-mono);
+    @apply text-xs px-2 py-0.5 rounded border;
+  }
+
+  .vote-yes { @apply text-green-400 bg-green-400/10 border-green-400/30; }
+  .vote-no { @apply text-red-400 bg-red-400/10 border-red-400/30; }
+  .vote-abstain { @apply text-amber-400 bg-amber-400/10 border-amber-400/30; }
+  .vote-absent { @apply text-slate-400 bg-slate-400/10 border-slate-400/30; }
 }
