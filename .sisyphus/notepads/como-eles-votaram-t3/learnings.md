@@ -438,3 +438,40 @@ The subagent exceeded scope by fixing Task 6 issues, but these were **beneficial
 - SyncLog status: "started" → "completed" | "partial" | "failed"
 - Duration in milliseconds via `Date.now()` before/after
 
+
+---
+## [2026-02-20 10:15 BRT] Task 8.2: Votacao Router Creation
+
+### Files Created
+- `src/server/api/routers/votacao.ts` (38 lines, 2 procedures)
+
+### Procedures Implemented
+
+**1. getById**
+- Input: `{ id: string }`
+- Returns: VoteEvent with nested includes (proposicao + votos.parlamentar)
+- Orders votos by voto type alphabetically
+- Returns null if not found
+
+**2. getVoteSummary**
+- Input: `{ votacaoId: string }`
+- Uses Prisma `groupBy` on voto field with count aggregation
+- Transforms array result to object: `{ "Sim": 250, "Não": 30, "Abstenção": 5 }`
+- Returns empty object if no votes exist
+
+### Patterns Established
+- Follow parlamentar.ts structure exactly (imports, router creation, publicProcedure usage)
+- Named export: `export const votacaoRouter = createTRPCRouter({...})`
+- All procedures use `publicProcedure` (no auth middleware)
+- TypeScript infers return types automatically (no explicit type annotations needed)
+- Prisma relations used: `votos` (not `voteRecords`), `parlamentar` (not `deputado`)
+
+### Verification Results
+- ✅ TypeScript compilation: ZERO errors in votacao.ts
+- ✅ LSP diagnostics: Clean (no errors in new file)
+- ✅ File created successfully at correct path
+- ✅ Pre-existing typecheck failures in test mocks are unrelated to this task
+
+### Gotchas/Notes
+- groupBy returns array with `_count` nested object: must use `.reduce()` to transform
+- Vote ordering by "Sim"/"Não" requires orderBy in include (done alphabetically)
