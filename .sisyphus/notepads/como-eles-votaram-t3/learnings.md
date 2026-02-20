@@ -98,3 +98,73 @@
 
 **Verdict:** PASS - Production-ready code quality
 
+
+## Task F3: Manual QA Execution Patterns (2026-02-20)
+
+### Browser Automation with Playwright MCP
+- **Tool**: Playwright MCP via `skill_mcp` with `mcp_name="playwright"`
+- **Actions Used**: 
+  - `browser_navigate` — Load pages
+  - `browser_take_screenshot` — Capture evidence (fullPage=true for complete view)
+  - `browser_console_messages` — Check for errors (level="error" for critical issues)
+  - `browser_type` — Input text (use `ref` from snapshot)
+  - `browser_press_key` — Keyboard navigation testing
+  - `browser_resize` — Responsive design testing (375x667 for mobile)
+- **Evidence Path**: `.sisyphus/evidence/final-qa/screenshots/*.png`
+
+### QA Execution Strategy
+**Planned**: Test each task's QA scenarios individually (50+ scenarios)  
+**Actual**: Integration-focused testing (blocked by database state at 24% completion)  
+**Learning**: Always verify data prerequisites BEFORE starting manual QA
+
+### What to Test First (Triage Order)
+1. **Infrastructure**: Dev server, build, basic page loads
+2. **Database**: Verify seeded data exists (check stats endpoint)
+3. **Critical Paths**: Homepage → Search → Profile → Detail
+4. **Responsive**: Mobile (375px), Desktop (1440px)
+5. **Edge Cases**: 404, errors, empty states
+
+### Playwright Snapshot Navigation
+- Each interactive element has `ref` attribute (e.g., `e25`)
+- Use `ref` for precise element targeting (not CSS selectors)
+- Accessibility tree snapshots better than screenshots for automation
+
+### Evidence Documentation Pattern
+**Structure**:
+```
+.sisyphus/evidence/final-qa/
+├── 00-summary.md           (verdict + scenario counts)
+├── critical-failures.md    (blocker analysis)
+├── task-{N}-{slug}.md      (per-task evidence)
+└── screenshots/
+    └── {scenario}-{step}.png
+```
+
+### Conditional Verdicts
+**PASS**: All scenarios pass  
+**CONDITIONAL FAIL**: Blocked by external issues (database, API down, etc.)  
+**FAIL**: Code defects, broken functionality, design violations  
+
+**Task F3 Verdict**: CONDITIONAL FAIL (blocked by empty database, not code defects)
+
+### Console Error Triage
+- **grid.svg 404**: Visual asset, non-blocking ➜ Document but don't fail QA
+- **Prisma query errors**: Blocking ➜ FAIL verdict, critical blocker
+- **React DevTools warning**: Informational ➜ Ignore
+
+### Responsive Testing
+- **Mobile**: 375x667 (iPhone SE)
+- **Desktop**: 1440x900 (default)
+- **Check**: No horizontal overflow, readable text, interactive elements tappable
+
+### tRPC Query Verification
+- Look for `[LOG] >> query #N` in console (query sent)
+- Look for `[LOG] << query #N` (success) or `[ERROR] << query #N` (failure)
+- Check `elapsedMs` for performance (<500ms expected)
+
+### Routes Require Dynamic Segments
+- `/deputados` ➜ 404 (needs `/deputados/[id]-[slug]`)
+- `/senadores` ➜ 404 (needs `/senadores/[id]-[slug]`)
+- `/votacoes` ➜ 404 (needs `/votacoes/[id]`)
+- Consider adding list pages for browsing without search
+

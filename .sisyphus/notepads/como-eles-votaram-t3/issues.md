@@ -71,3 +71,33 @@ The type narrowing error from Task 6 is now resolved due to improved parsing log
 
 **Build status**: SUCCESS (no TypeScript errors)
 
+
+## Task F3: Manual QA — Critical Blockers (2026-02-20)
+
+### Database State Issues
+- **0 parlamentares** in database (expected 594: 513 deputados + 81 senadores)
+- **115 votações** exist but orphaned (no parlamentar foreign keys resolved)
+- **Blocks**: 80% of planned QA scenarios (profile pages, search, integration tests)
+
+### Search Functionality Broken
+- **Error**: `TRPCClientError: Invalid prisma.parlamentar.findMany() invocation`
+- **Location**: `/busca` page, `parlamentar.search` tRPC procedure
+- **Console**: Repeated query failures when typing in search input
+- **Root cause**: Prisma schema issue or incompatibility with empty parlamentares table
+
+### Dev Server Issue (RESOLVED)
+- **Issue**: Turbopack panic on startup with malformed CSS references (lines 1101-1106 in globals.css that don't exist)
+- **Fix**: Deleted `.next` cache directory, restarted dev server
+- **Status**: ✅ RESOLVED — Dev server runs cleanly after cache clear
+
+### Minor Issues (Non-Blocking)
+- `/grid.svg` asset 404 (visual only, no functional impact)
+- Route discrepancy: Header links to `/buscar` (404), should be `/busca`
+- List pages 404: `/deputados`, `/senadores`, `/votacoes` (only dynamic slugs work)
+
+### Recommendation
+1. Run full data sync: `POST /api/sync/camara` and `POST /api/sync/senado`
+2. Debug Prisma search query in `src/server/api/routers/parlamentar.ts`
+3. Add graceful empty state handling for search (not just error state)
+4. Re-run Task F3 QA after database seeding
+
