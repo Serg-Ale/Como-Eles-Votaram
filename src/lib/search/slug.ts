@@ -15,7 +15,7 @@ export function parseSlug(
 ): { id: string; nameSlug: string } {
   const parts = slug.split("-");
 
-  if (parts.length < 2) {
+  if (parts.length < 3) {
     return { id: slug, nameSlug: "" };
   }
 
@@ -28,9 +28,9 @@ export function parseSlug(
 export function buildProfileUrl(parlamentar: {
   id: string;
   nome: string;
-  camara: boolean;
+  camara: string;
 }): string {
   const slug = generateSlug(parlamentar.nome);
-  const chamber = parlamentar.camara ? "deputados" : "senadores";
+  const chamber = parlamentar.camara === "senado" ? "senadores" : "deputados";
   return `/${chamber}/${parlamentar.id}-${slug}`;
 }

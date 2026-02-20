@@ -2082,7 +2082,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/app/busca/page.tsx`, `src/app/busca/layout.tsx`
   - Pre-commit: `pnpm build && pnpm test`
 
-- [ ] 14. Deputado Profile Page
+- [x] 14. Deputado Profile Page
 
   **What to do**:
   - Create `src/app/deputados/[slug]/page.tsx` — full deputado profile:
@@ -2238,7 +2238,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/app/deputados/[slug]/page.tsx`, `src/app/deputados/[slug]/layout.tsx`
   - Pre-commit: `pnpm build && pnpm test`
 
-- [ ] 15. Senador Profile Page
+- [x] 15. Senador Profile Page
 
   **What to do**:
   - Create `src/app/senadores/[slug]/page.tsx` — full senator profile:
@@ -2376,7 +2376,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/app/senadores/[slug]/page.tsx`, `src/app/senadores/[slug]/layout.tsx`
   - Pre-commit: `pnpm build && pnpm test`
 
-- [ ] 16. Bill/Votação Detail Page
+- [x] 16. Bill/Votação Detail Page
 
   **What to do**:
   - Create `src/app/votacoes/[id]/page.tsx` — voting event detail page:
