@@ -1324,7 +1324,7 @@ Max Concurrent: 5 (Wave 1 & Wave 2)
   - Message: `style(pages): redesign home page and data components`
   - Files: `src/components/votacao/votacao-card.tsx`, `src/components/parlamentar/voting-history-card.tsx`
 
-- [ ] 15. OpenGraph Image Brand Update (opengraph-image.tsx)
+- [x] 15. OpenGraph Image Brand Update (opengraph-image.tsx)
 
   **What to do**:
   - Open `src/app/opengraph-image.tsx`
@@ -1393,7 +1393,7 @@ Max Concurrent: 5 (Wave 1 & Wave 2)
   - Message: `style(pages): update remaining pages and opengraph image`
   - Files: `src/app/opengraph-image.tsx`
 
-- [ ] 16. Busca Page Verification (busca/page.tsx)
+- [x] 16. Busca Page Verification (busca/page.tsx)
 
   **What to do**:
   - Open `src/app/busca/page.tsx`
@@ -1450,7 +1450,7 @@ Max Concurrent: 5 (Wave 1 & Wave 2)
   - Message: `style(pages): update remaining pages and opengraph image`
   - Files: `src/app/busca/page.tsx` (if modified)
 
-- [ ] 17. Parlamentar Detail Pages Verification (deputados/[slug]/page.tsx + senadores/[slug]/page.tsx)
+- [x] 17. Parlamentar Detail Pages Verification (deputados/[slug]/page.tsx + senadores/[slug]/page.tsx)
 
   **What to do**:
   - Open `src/app/deputados/[slug]/page.tsx` and `src/app/senadores/[slug]/page.tsx`
@@ -1508,7 +1508,7 @@ Max Concurrent: 5 (Wave 1 & Wave 2)
   - Message: `style(pages): update remaining pages and opengraph image`
   - Files: `src/app/deputados/[slug]/page.tsx`, `src/app/senadores/[slug]/page.tsx` (if modified)
 
-- [ ] 18. Votação Detail Page Verification (votacoes/[id]/page.tsx + test)
+- [x] 18. Votação Detail Page Verification (votacoes/[id]/page.tsx + test)
 
   **What to do**:
   - Open `src/app/votacoes/[id]/page.tsx`

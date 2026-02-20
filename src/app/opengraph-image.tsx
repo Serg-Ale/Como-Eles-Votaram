@@ -14,7 +14,7 @@ export default async function Image() {
       <div
         style={{
           fontSize: 128,
-          background: "#09090b",
+          background: "#071018",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -42,26 +42,24 @@ export default async function Image() {
             }}
           >
             Como Eles{" "}
-            <span
+             <span
               style={{
-                background: "linear-gradient(90deg, #22c55e 0%, #facc15 50%, #3b82f6 100%)",
-                backgroundClip: "text",
-                color: "transparent",
+                color: "#34d399",
               }}
             >
               Votaram
             </span>
           </div>
-          <div
-            style={{
-              fontSize: 36,
-              color: "#9ca3af",
-              textAlign: "center",
-              fontWeight: 500,
-            }}
-          >
-            Transparência Legislativa
-          </div>
+           <div
+             style={{
+               fontSize: 36,
+               color: "#6b7f99",
+               textAlign: "center",
+               fontWeight: 500,
+             }}
+           >
+             Transparência Legislativa
+           </div>
         </div>
       </div>
     ),

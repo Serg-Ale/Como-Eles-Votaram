@@ -1,0 +1,14 @@
+PASS src/app/votacoes/[id]/__tests__/page.test.tsx
+  VotacaoPage
+    ✓ renders voting details successfully (80 ms)
+    ✓ renders empty state for symbolic votes (no individual records) (41 ms)
+    ✓ calls notFound when votacao is not found (26 ms)
+    ✓ links parlamentar names to profiles correctly (22 ms)
+    ✓ renders source attribution (11 ms)
+    ✓ handles missing vote types in summary gracefully (9 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       6 passed, 6 total
+Snapshots:   0 total
+Time:        0.885 s, estimated 1 s
+Ran all test suites matching /src\/app\/votacoes\/\[id\]\/__tests__\/page.test.tsx/i.
