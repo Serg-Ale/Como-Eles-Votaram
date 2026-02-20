@@ -1,4 +1,5 @@
 import { parlamentarRouter } from "@/server/api/routers/parlamentar";
+import { statsRouter } from "@/server/api/routers/stats";
 import { votacaoRouter } from "@/server/api/routers/votacao";
 import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 
@@ -10,6 +11,7 @@ import { createCallerFactory, createTRPCRouter } from "@/server/api/trpc";
 export const appRouter = createTRPCRouter({
   parlamentar: parlamentarRouter,
   votacao: votacaoRouter,
+  stats: statsRouter,
 });
 
 // export type definition of API
