@@ -9,6 +9,9 @@ export const parlamentarRouter = createTRPCRouter({
       return ctx.db.parlamentar.findUnique({
         where: { id: input.id },
         include: {
+          _count: {
+            select: { votos: true, proposicoes: true },
+          },
           votos: {
             take: 20,
             orderBy: { createdAt: "desc" },

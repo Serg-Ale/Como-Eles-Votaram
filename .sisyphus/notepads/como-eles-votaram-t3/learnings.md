@@ -970,4 +970,11 @@ export default function SearchPage() {
 - **Tooling**: `Write` tool cannot overwrite existing files; must use `Edit` with `replaceAll` (or match full content).
 - **Hydration**: `HydrateClient` wrapper is essential when using tRPC in Server Components to pass state to Client Components.
 - **Mocking**: `jest.mock("@/trpc/server")` needed to export `HydrateClient` as a passthrough component to avoid `undefined` errors during rendering in tests.
-- **CRITICAL**: Learnings notepad was accidentally overwritten (931 lines lost) — restored from commit 8412713. ALWAYS use Edit tool with append, NEVER Write tool on existing notepads.
+
+## Task 13: Search Page Implementation
+- **Next.js 16 Suspense**: `useSearchParams` in Client Components causes build errors ("should be wrapped in a suspense boundary") if the page is not wrapped in `<Suspense>`. Always wrap search pages in a Suspense boundary.
+- **tRPC Infinite Queries**: Backend uses cursor-based pagination (`nextCursor`). Frontend must use `useInfiniteQuery` and `getNextPageParam: (lastPage) => lastPage.nextCursor`.
+- **Filter Mapping**: Backend expects specific enum values ("deputados" | "senadores") which might differ from UI representation ("camara" | "senado"). Mapping logic is crucial.
+- **Testing**: Mocking `next/navigation` and `trpc/react` requires careful setup. `useInfiniteQuery` mock needs to return `data: { pages: [...] }` structure.
+- **Key Props**: Using array index as key for static skeleton lists triggers lint warnings but is acceptable if list is static.
+

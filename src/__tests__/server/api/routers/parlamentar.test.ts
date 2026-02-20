@@ -74,6 +74,9 @@ describe("parlamentarRouter", () => {
       expect(mockDb.parlamentar.findUnique).toHaveBeenCalledWith({
         where: { id: "dep-123" },
         include: {
+          _count: {
+            select: { votos: true, proposicoes: true },
+          },
           votos: {
             take: 20,
             orderBy: { createdAt: "desc" },

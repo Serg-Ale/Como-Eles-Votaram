@@ -1927,7 +1927,7 @@ Max Concurrent: 5 (Wave 4)
   - Files: `src/app/page.tsx`, `src/app/layout.tsx`
   - Pre-commit: `pnpm build`
 
-- [ ] 13. Search Page + Results
+- [x] 13. Search Page + Results
 
   **What to do**:
   - Create `src/app/busca/page.tsx` — search results page:
