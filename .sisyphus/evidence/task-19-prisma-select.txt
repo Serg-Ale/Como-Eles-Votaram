@@ -1,7 +1,0 @@
-/home/lxndr/Projects/Personal/vote-tracking-app/src/server/api/routers/parlamentar.ts:67:      const items = await ctx.db.parlamentar.findMany({
-/home/lxndr/Projects/Personal/vote-tracking-app/src/server/api/routers/parlamentar.ts:107:      const items = await ctx.db.voteRecord.findMany({
-/home/lxndr/Projects/Personal/vote-tracking-app/src/server/api/routers/parlamentar.ts:138:      const items = await ctx.db.proposicao.findMany({
-/home/lxndr/Projects/Personal/vote-tracking-app/src/server/api/routers/parlamentar.ts:167:    const result = await ctx.db.parlamentar.findMany({
-/home/lxndr/Projects/Personal/vote-tracking-app/src/server/api/routers/parlamentar.ts:177:      const result = await ctx.db.parlamentar.findMany({
-/home/lxndr/Projects/Personal/vote-tracking-app/src/server/api/routers/parlamentar.ts:188:    return ctx.db.parlamentar.findMany({
-/home/lxndr/Projects/Personal/vote-tracking-app/src/server/api/routers/stats.ts:20:      ctx.db.syncLog.findFirst({

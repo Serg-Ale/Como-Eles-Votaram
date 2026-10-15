@@ -1,2 +1,0 @@
-grep: /home/lxndr/Projects/Personal/vote-tracking-app/src/app/votacoes/\[id\]/page.tsx: No such file or directory
-No hex colors found (expected).

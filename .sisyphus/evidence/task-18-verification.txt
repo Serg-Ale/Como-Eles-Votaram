@@ -1,4 +1,0 @@
-
-> vote-tracking-app@0.1.0 test /home/lxndr/Projects/Personal/vote-tracking-app
-> jest src/app/__tests__/error src/app/__tests__/not-found src/app/busca/__tests__/loading
-
